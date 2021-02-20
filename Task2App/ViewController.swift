@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        calcResultLabel.text = "0.0"
+        calcResultLabel.text = "数値を入力して下さい"
         calcTextField1.keyboardType = .numberPad
         calcTextField2.keyboardType = .numberPad
     }
@@ -28,32 +28,31 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func calcButton(_ sender: Any) {
-        if calcTextField1.text == "" || calcTextField2.text == ""{
-            calcResultLabel.text = "数値を入力して下さい"
-        } else {
-            let label1 = (calcTextField1.text! as NSString).doubleValue
-            let label2 = (calcTextField2.text! as NSString).doubleValue
+        guard calcTextField1.text != "" else {calcResultLabel.text = "数値を入力して下さい"; return}
+        guard calcTextField2.text != "" else {calcResultLabel.text = "数値を入力して下さい"; return}
 
-            switch segmentedControl.selectedSegmentIndex {
-            case 0:
-                let result = label1 + label2
-                calcResultLabel.text = String(result)
-            case 1:
-                let result = label1 - label2
-                calcResultLabel.text = String(result)
-            case 2:
-                let result = label1 * label2
-                calcResultLabel.text = String(result)
-            case 3:
-                if label2 == 0 {
-                    calcResultLabel.text = "割る数には0以外を入力して下さい"
-                    break
-                }
-                let result = label1 / label2
-                calcResultLabel.text = String(result)
-            default:
+        let label1 = (calcTextField1.text! as NSString).doubleValue
+        let label2 = (calcTextField2.text! as NSString).doubleValue
+
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            let result = label1 + label2
+            calcResultLabel.text = String(result)
+        case 1:
+            let result = label1 - label2
+            calcResultLabel.text = String(result)
+        case 2:
+            let result = label1 * label2
+            calcResultLabel.text = String(result)
+        case 3:
+            if label2 == 0 {
+                calcResultLabel.text = "割る数には0以外を入力して下さい"
                 break
             }
+            let result = label1 / label2
+            calcResultLabel.text = String(result)
+        default:
+            break
         }
     }
 }
