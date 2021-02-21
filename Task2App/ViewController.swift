@@ -17,7 +17,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         calcResultLabel.text = "数値を入力して下さい"
         calcTextField1.keyboardType = .numberPad
         calcTextField2.keyboardType = .numberPad
@@ -28,30 +27,37 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func calcButton(_ sender: Any) {
-        guard calcTextField1.text != "" else {calcResultLabel.text = "数値を入力して下さい"; return}
-        guard calcTextField2.text != "" else {calcResultLabel.text = "数値を入力して下さい"; return}
+        enum Calculation: Int {
+            case addition
+            case subtraction
+            case multiplication
+            case division
+        }
+        guard calcTextField1.text!.isEmpty == false else {calcResultLabel.text = "数値を入力して下さい"; return}
+        guard calcTextField2.text!.isEmpty == false else {calcResultLabel.text = "数値を入力して下さい"; return}
 
         let label1 = (calcTextField1.text! as NSString).doubleValue
         let label2 = (calcTextField2.text! as NSString).doubleValue
 
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
+        let calculation = Calculation(rawValue: segmentedControl.selectedSegmentIndex)
+        switch calculation {
+        case .addition:
             let result = label1 + label2
             calcResultLabel.text = String(result)
-        case 1:
+        case .subtraction:
             let result = label1 - label2
             calcResultLabel.text = String(result)
-        case 2:
+        case .multiplication:
             let result = label1 * label2
             calcResultLabel.text = String(result)
-        case 3:
-            if label2 == 0 {
+        case .division:
+            guard label2 != 0 else {
                 calcResultLabel.text = "割る数には0以外を入力して下さい"
-                break
+                return
             }
             let result = label1 / label2
             calcResultLabel.text = String(result)
-        default:
+        case .none:
             break
         }
     }
