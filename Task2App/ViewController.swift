@@ -42,21 +42,17 @@ class ViewController: UIViewController {
         let calculation = Calculation(rawValue: segmentedControl.selectedSegmentIndex)
         switch calculation {
         case .addition:
-            let result = label1 + label2
-            calcResultLabel.text = String(result)
+            calcResultLabel.text = "\(label1 + label2)"
         case .subtraction:
-            let result = label1 - label2
-            calcResultLabel.text = String(result)
+            calcResultLabel.text = "\(label1 - label2)"
         case .multiplication:
-            let result = label1 * label2
-            calcResultLabel.text = String(result)
+            calcResultLabel.text = "\(label1 * label2)"
         case .division:
             guard label2 != 0 else {
                 calcResultLabel.text = "割る数には0以外を入力して下さい"
                 return
             }
-            let result = label1 / label2
-            calcResultLabel.text = String(result)
+            calcResultLabel.text = "\(label1 / label2)"
         case .none:
             break
         }
