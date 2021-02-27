@@ -33,28 +33,38 @@ class ViewController: UIViewController {
             case multiplication
             case division
         }
-        guard calcTextField1.text!.isEmpty == false else {calcResultLabel.text = "数値を入力して下さい"; return}
-        guard calcTextField2.text!.isEmpty == false else {calcResultLabel.text = "数値を入力して下さい"; return}
 
-        let label1 = (calcTextField1.text! as NSString).doubleValue
-        let label2 = (calcTextField2.text! as NSString).doubleValue
+        guard let num1 = Double(calcTextField1.text!) else {
+            calcResultLabel.text = "数値を入力して下さい"
+            return
+        }
 
-        let calculation = Calculation(rawValue: segmentedControl.selectedSegmentIndex)
+        guard let num2 = Double(calcTextField2.text!) else {
+            calcResultLabel.text = "数値を入力して下さい"
+            return
+        }
+
+        guard let calculation = Calculation(rawValue: segmentedControl.selectedSegmentIndex) else {
+            return
+        }
+
+        let result: Double
+
         switch calculation {
         case .addition:
-            calcResultLabel.text = "\(label1 + label2)"
+            result = num1 + num2
         case .subtraction:
-            calcResultLabel.text = "\(label1 - label2)"
+            result = num1 - num2
         case .multiplication:
-            calcResultLabel.text = "\(label1 * label2)"
+            result = num1 * num2
         case .division:
-            guard label2 != 0 else {
+            guard num2 != 0 else {
                 calcResultLabel.text = "割る数には0以外を入力して下さい"
                 return
             }
-            calcResultLabel.text = "\(label1 / label2)"
-        case .none:
-            break
+            result = num1 / num2
         }
+
+        calcResultLabel.text = "\(result)"
     }
 }
